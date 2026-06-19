@@ -142,6 +142,7 @@ function renderRules() {
     ["Max. Schritt W", "max_step_w", c.max_step_w, "number"],
     ["Min-SOC %", "min_soc_percent", c.min_soc_percent, "number"],
     ["Ziel-Max-SOC %", "target_max_soc_percent", c.target_max_soc_percent, "number"],
+    ["Sensor veraltet nach s", "stale_timeout_seconds", c.stale_timeout_seconds, "number"],
   ];
   $("#rules").innerHTML = `
     <section class="panel">

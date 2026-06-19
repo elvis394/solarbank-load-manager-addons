@@ -6,6 +6,8 @@ from .models import AppConfig, EntityState
 
 
 def is_stale(state: EntityState | None, now: datetime, timeout_seconds: int) -> bool:
+    if timeout_seconds <= 0:
+        return False
     if state is None or state.last_updated is None:
         return True
     if state.last_updated.tzinfo is None:

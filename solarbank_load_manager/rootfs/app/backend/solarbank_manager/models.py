@@ -46,7 +46,7 @@ class ControlConfig(BaseModel):
     max_step_w: float = Field(default=50, ge=0)
     min_soc_percent: float = Field(default=20, ge=0, le=100)
     target_max_soc_percent: float = Field(default=80, ge=0, le=100)
-    stale_timeout_seconds: int = Field(default=120, ge=5)
+    stale_timeout_seconds: int = Field(default=900, ge=0)
     direct_pv_bias_w: float = Field(default=0.5, ge=0)
     dry_run: bool = True
     manual_override: bool = False

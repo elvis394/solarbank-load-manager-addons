@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5 experimental
+
+- Increase stale sensor timeout to 15 minutes and make it configurable in the rule parameters.
+- Allow disabling stale checks by setting the timeout to 0 seconds.
+
 ## 0.1.4 experimental
 
 - Add searchable entity mapping fields with typed suggestions and free entity ID input.
