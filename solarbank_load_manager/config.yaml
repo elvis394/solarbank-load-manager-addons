@@ -1,5 +1,5 @@
 name: "Solarbank Load Manager"
-version: "0.1.0"
+version: "0.1.1"
 slug: "solarbank_load_manager"
 description: "Leistungsabhaengige Steuerung mehrerer Anker Solix Solarbaenke"
 url: "https://github.com/elvis394/solarbank-load-manager-addons"

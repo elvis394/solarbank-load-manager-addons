@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 experimental
+
+- Fix Docker build on current Home Assistant base images by installing temporary build tools for Python packages with native extensions.
+- Mark the add-on service run script executable during the image build.
+
 ## 0.1.0 experimental
 
 - Initial add-on structure.
