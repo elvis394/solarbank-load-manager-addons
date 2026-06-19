@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 experimental
+
+- Add searchable entity mapping fields with typed suggestions and free entity ID input.
+
 ## 0.1.3 experimental
 
 - Fix Ingress frontend asset, API and WebSocket paths so CSS and JavaScript load correctly inside Home Assistant.

@@ -23,14 +23,38 @@ async function api(path, options = {}) {
   return response.json();
 }
 
-function entityOptions(domain, selected = "") {
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function entityInput(label, path, domain, selected = "") {
+  const listId = `entities-${path.replace(/\./g, "-")}`;
   const matching = entities.filter((entity) => entity.entity_id.startsWith(`${domain}.`));
-  const options = [`<option value="">Nicht gesetzt</option>`]
-    .concat(matching.map((entity) => `<option value="${entity.entity_id}">${entity.entity_id}</option>`));
-  if (selected && !matching.some((entity) => entity.entity_id === selected)) {
-    options.push(`<option value="${selected}">${selected}</option>`);
-  }
-  return options.join("").replace(`value="${selected}"`, `value="${selected}" selected`);
+  return `
+    <label>${label}
+      <input data-path="${path}" value="${escapeHtml(selected)}" list="${listId}" placeholder="${domain}.">
+      <datalist id="${listId}">
+        ${matching.map((entity) => `<option value="${escapeHtml(entity.entity_id)}">${escapeHtml(entity.attributes?.friendly_name || entity.entity_id)}</option>`).join("")}
+      </datalist>
+    </label>
+  `;
+}
+
+function setpointInput(label, path, selected = "") {
+  const listId = `entities-${path.replace(/\./g, "-")}`;
+  const matching = entities.filter((entity) => entity.entity_id.startsWith("number.") || entity.entity_id.startsWith("input_number."));
+  return `
+    <label>${label}
+      <input data-path="${path}" value="${escapeHtml(selected)}" list="${listId}" placeholder="number. oder input_number.">
+      <datalist id="${listId}">
+        ${matching.map((entity) => `<option value="${escapeHtml(entity.entity_id)}">${escapeHtml(entity.attributes?.friendly_name || entity.entity_id)}</option>`).join("")}
+      </datalist>
+    </label>
+  `;
 }
 
 function setByPath(target, path, value) {
@@ -70,12 +94,8 @@ function renderSetup() {
       <section class="panel">
         <h2>Smart Meter</h2>
         <div class="form-grid">
-          <label>Netzbezug
-            <select data-path="smart_meter.import_power_entity">${entityOptions("sensor", config.smart_meter.import_power_entity)}</select>
-          </label>
-          <label>Netzeinspeisung
-            <select data-path="smart_meter.export_power_entity">${entityOptions("sensor", config.smart_meter.export_power_entity)}</select>
-          </label>
+          ${entityInput("Netzbezug", "smart_meter.import_power_entity", "sensor", config.smart_meter.import_power_entity)}
+          ${entityInput("Netzeinspeisung", "smart_meter.export_power_entity", "sensor", config.smart_meter.export_power_entity)}
         </div>
       </section>
       ${config.banks.map((bank, index) => `
@@ -84,15 +104,10 @@ function renderSetup() {
           <div class="form-grid">
             <label>Name <input data-path="banks.${index}.name" value="${bank.name}"></label>
             <label>Kapazitaet Wh <input type="number" data-path="banks.${index}.capacity_wh" value="${bank.capacity_wh}"></label>
-            <label>SOC <select data-path="banks.${index}.soc_entity">${entityOptions("sensor", bank.soc_entity)}</select></label>
-            <label>PV-Leistung <select data-path="banks.${index}.pv_power_entity">${entityOptions("sensor", bank.pv_power_entity)}</select></label>
-            <label>AC-Ist-Leistung <select data-path="banks.${index}.ac_output_entity">${entityOptions("sensor", bank.ac_output_entity)}</select></label>
-            <label>Einspeisevorgabe
-              <select data-path="banks.${index}.setpoint_entity">
-                ${entityOptions("number", bank.setpoint_entity)}
-                ${entityOptions("input_number", bank.setpoint_entity)}
-              </select>
-            </label>
+            ${entityInput("SOC", `banks.${index}.soc_entity`, "sensor", bank.soc_entity)}
+            ${entityInput("PV-Leistung", `banks.${index}.pv_power_entity`, "sensor", bank.pv_power_entity)}
+            ${entityInput("AC-Ist-Leistung", `banks.${index}.ac_output_entity`, "sensor", bank.ac_output_entity)}
+            ${setpointInput("Einspeisevorgabe", `banks.${index}.setpoint_entity`, bank.setpoint_entity)}
             <label>Stellwert-Domain
               <select data-path="banks.${index}.setpoint_domain">
                 <option value="number" ${bank.setpoint_domain === "number" ? "selected" : ""}>number</option>
