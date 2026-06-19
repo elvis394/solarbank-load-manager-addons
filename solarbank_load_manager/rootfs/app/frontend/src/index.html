@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solarbank Load Manager</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>Solarbank Manager</h1>
+          <p id="subtitle">Dry Run aktiv</p>
+        </div>
+        <div class="status-strip" id="statusStrip"></div>
+      </header>
+
+      <nav class="tabs" aria-label="Ansichten">
+        <button class="active" data-tab="setup">Einrichtung</button>
+        <button data-tab="rules">Parameter</button>
+        <button data-tab="live">Live</button>
+        <button data-tab="log">Denkprozess</button>
+        <button data-tab="manual">Manuell</button>
+      </nav>
+
+      <section id="setup" class="view active"></section>
+      <section id="rules" class="view"></section>
+      <section id="live" class="view"></section>
+      <section id="log" class="view"></section>
+      <section id="manual" class="view"></section>
+    </main>
+    <script type="module" src="/assets/main.js"></script>
+  </body>
+</html>

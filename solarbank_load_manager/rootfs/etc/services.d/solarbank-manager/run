@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+set -e
+cd /app/backend
+exec python3 -m solarbank_manager.main
