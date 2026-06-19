@@ -15,7 +15,7 @@ document.querySelectorAll(".tabs button").forEach((button) => {
 });
 
 async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`./api${path}`, {
     headers: { "Content-Type": "application/json" },
     ...options,
   });
@@ -264,7 +264,9 @@ async function load() {
 
 function connectWs() {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
-  const ws = new WebSocket(`${protocol}://${location.host}/api/ws`);
+  const wsUrl = new URL("./api/ws", window.location.href);
+  wsUrl.protocol = protocol;
+  const ws = new WebSocket(wsUrl);
   ws.onmessage = (event) => {
     state = JSON.parse(event.data);
     config = state.config;

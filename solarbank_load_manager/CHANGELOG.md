@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 experimental
+
+- Fix Ingress frontend asset, API and WebSocket paths so CSS and JavaScript load correctly inside Home Assistant.
+
 ## 0.1.2 experimental
 
 - Update Python dependencies for Home Assistant base images using Python 3.14.
