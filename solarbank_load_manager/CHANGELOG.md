@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 experimental
+
+- Update Python dependencies for Home Assistant base images using Python 3.14.
+- Add a valid default Docker base image to silence the build argument warning.
+
 ## 0.1.1 experimental
 
 - Fix Docker build on current Home Assistant base images by installing temporary build tools for Python packages with native extensions.
